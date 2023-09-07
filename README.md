@@ -12,6 +12,12 @@ be able to ask questions, seek information, or request assistance regarding docs
 utilize
 the capabilities of GPT to comprehend user inputs and generate informative and contextually appropriate responses.
 
+## Updates...
+
+### Hackathon Submission: - [DevPost](https://devpost.com/software/oschat)
+
+### Demo: [Video](https://youtu.be/_jU1oCfH6G8)
+
 ## Prerequisites
 
 To run the OS-Chat project, you need to have the following prerequisites:
