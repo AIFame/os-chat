@@ -16,6 +16,9 @@ PINECONE_API_ENV: Final[str] = environ['PINECONE_API_ENV'].strip()
 INDEX_NAME: Final[str] = os.getenv('INDEX_NAME', 'langchaintest').strip()
 
 OPENAI_API_KEY: Final[str] = environ['OPENAI_API_KEY'].strip()
+OPENAI_ORGANIZATION_ID: Final[str] = environ.get(
+    'OPENAI_ORGANIZATION_ID', '',
+).strip()
 OPENAI_EMBEDDINGS_LLM: Final[str] = os.getenv(
     'OPENAI_EMBEDDINGS_LLM', 'text-embedding-ada-002',
 ).strip()
