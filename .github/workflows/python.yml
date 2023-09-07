@@ -13,10 +13,7 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  PINECONE_API_KEY: ${{ secrets.PINECONE_API_KEY }}
-  PINECONE_API_ENV: ${{ vars.PINECONE_API_ENV }}
-  OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-  INDEX_NAME: ${{ vars.INDEX_NAME}}
+  envfile: ${{ secrets.ENV }}
   mode: testing
 
 jobs:
@@ -37,6 +34,12 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
           cache: 'pip'
+
+      - name: Write environment
+        run: |
+          echo $envfile > .env
+          sed -i 's/ /\n/g' .env
+          source .env
 
       - name: Install dependencies
         run: |
@@ -65,6 +68,12 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+
+      - name: Write environment
+        run: |
+          echo $envfile > .env
+          sed -i 's/ /\n/g' .env
+          source .env
 
       - name: Build Dockerfile
         run: |
