@@ -25,7 +25,7 @@ To run the OS-Chat project, you need to have the following prerequisites:
 To run the OS-Chat project using `Python` and `make`, follow these steps:
 
 ```shell
-   git clone <repository_url> os-chat
+   git clone https://github.com/AIFame/os-chat os-chat
    cd os-chat
    make install
    make run
@@ -37,18 +37,16 @@ To run the OS-Chat project using `Docker`, follow these steps:
 
 ```shell
 docker build -t os-chat .
-docker run -p 8599:8599 os-chat
+docker run -p 8501:8501 os-chat
 ```
 
 > For developers,
 > I recommend <br>
-> ```docker run -it -e "mode=development" -p 8599:8599 os-chat``` <br>
+> ```docker run -it -e "mode=development" -p 8501:8501 os-chat``` <br>
 > playaround and test your code!
 
 
 > That's it! You can now use the OS-Chat chatbot to have conversations related to your documentations.
-
-> Please note that you will need to replace `<repository_url>` with the actual URL of this/forked repo
 
 I hope this helps! Raise issues to clarify your doubts and notify bugs.
 
