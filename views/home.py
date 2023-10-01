@@ -1,17 +1,10 @@
 import streamlit as st
 
-import public
 from handlers.userinput import handle_userinput
 from .sidebar import sidebar
 
 
 def home():
-    st.set_page_config(
-        page_title='OpenSource Chat',
-        page_icon=':books:',
-    )  # TODO: release
-    st.write(public.css_index, unsafe_allow_html=True)
-
     # initial session_state in order to avoid refresh
     if 'conversation' not in st.session_state:
         st.session_state.conversation = None
