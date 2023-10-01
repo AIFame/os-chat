@@ -13,7 +13,7 @@ MODE: Final[str] = os.getenv('mode', DEVELOPMENT)
 
 PINECONE_API_KEY: Final[str] = environ['PINECONE_API_KEY'].strip()
 PINECONE_API_ENV: Final[str] = environ['PINECONE_API_ENV'].strip()
-INDEX_NAME: Final[str] = environ['INDEX_NAME'].strip()
+INDEX_NAME: Final[str] = environ.get('INDEX_NAME', "oschat")
 
 OPENAI_API_KEY: Final[str] = environ['OPENAI_API_KEY'].strip()
 OPENAI_ORGANIZATION_ID: Final[str] = environ.get(
