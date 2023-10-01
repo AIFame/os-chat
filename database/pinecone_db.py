@@ -32,7 +32,7 @@ def insert(data: List[Document], embeddings: OpenAIEmbeddings, index=INDEX_NAME)
     return Pinecone.from_documents(data, embedding=embeddings, index_name=index)
 
 
-def need_text_embedding():
+def need_text_embedding() -> bool:
     need_text_embedding = False
     index = pinecone.Index(INDEX_NAME)
     index_stats_response = index.describe_index_stats()

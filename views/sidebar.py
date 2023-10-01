@@ -8,7 +8,7 @@ from utils.ai.open_ai import get_text_chunk, upsert
 def sidebar_spinner():
     with st.spinner('Processing'):
 
-        if need_text_embedding() == True:
+        if need_text_embedding():
             # index not created and need run text embedding
             # Use loader and data splitter to make a document list
             st.write("Index didn't found. Will process Embeding for you.")
