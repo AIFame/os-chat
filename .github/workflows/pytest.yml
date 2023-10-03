@@ -1,0 +1,92 @@
+name: Pytest
+
+on:
+  push:
+  # branches: ["main"]
+  pull_request:
+  # branches: ["main"]
+
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  envfile: ${{ secrets.ENV }}
+  mode: testing
+  "POETRY_VIRTUALENVS_IN_PROJECT": false
+  "POETRY_VIRTUALENVS_OPTIONS_ALWAYS_COPY": false
+  "POETRY_VIRTUALENVS_OPTIONS_NO_PIP": false
+  "POETRY_VIRTUALENVS_OPTIONS_NO_SETUPTOOLS": false
+
+jobs:
+  test:
+    strategy:
+      fail-fast: false
+      max-parallel: 2
+      matrix:
+        os: [ ubuntu-latest ]
+        python-version: [ "3.10", "3.11" ]
+
+    runs-on: ${{matrix.os}}
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install poetry
+        run: pipx install poetry
+
+      - name: Set up Python ${{ matrix.python-version }} on ${{matrix.os}}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: "poetry"
+          cache-dependency-path: |
+            **/setup.cfg
+            **/requirements*.txt
+            poetry.lock
+            pyproject.toml
+
+      - name: Write environment
+        run: |
+          echo $envfile > .env
+          sed -i 's/ /\n/g' .env
+          source .env
+
+      - name: Install dependencies
+        run: |
+          #make install
+          #make install-tests
+          # poetry config settings.virtualenvs.create false --local
+          # poetry config virtualenvs.create false
+          poetry install --no-root
+          source $(poetry env info --path)/bin/activate
+
+      - name: Poetry Config
+        run: poetry config --list
+
+      - name: Set timezone
+        uses: szenius/set-timezone@v1.2
+        with:
+          timezoneLinux: "Asia/Calcutta"
+          # timezoneMacos: "Asia/Singapore"
+          # timezoneWindows: "Singapore Standard Time"
+
+      - name: Pytest Deps
+        run: poetry add pytest pytest-md pytest-emoji
+
+      - name: Run pytest
+        uses: pavelzw/pytest-action@v2
+        with:
+          verbose: true
+          emoji: true
+          job-summary: true
+          custom-arguments: "-p no:cacheprovider -q"
+          click-to-expand: true
+          report-title: "Test Report"
+          custom-pytest: "poetry run pytest"
+
+      # - name: Run tests
+      #   run: |
+      #     make test

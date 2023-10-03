@@ -1,0 +1,49 @@
+name: dependabot-merges
+
+on:
+  pull_request:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+jobs:
+  auto-merge-patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ahmadnassri/action-dependabot-auto-merge@v2
+        with:
+          target: patch # Merge patch updates
+          github-token: ${{ github.token }}
+          config: ''
+
+  auto-merge-minor:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ahmadnassri/action-dependabot-auto-merge@v2
+        with:
+          target: minor # Merge minor updates
+          github-token: ${{ github.token }}
+          config: ''
+
+  auto-merge-config:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ahmadnassri/action-dependabot-auto-merge@v2
+        with:
+          target: all # Merge minor updates
+          github-token: ${{ github.token }}
+          config: '.github/dependabot-merge.yml'
+
+  # auto-merge-dev:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - uses: ahmadnassri/action-dependabot-auto-merge@v2
+  #       with:
+  #         # target: minor  # Merge minor updates can be major
+  #         github-token: ${{ github.token }}

@@ -1,0 +1,37 @@
+name: Docker
+
+on:
+  push:
+  # branches: ["main"]
+  pull_request:
+  # branches: ["main"]
+
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  envfile: ${{ secrets.ENV }}
+  mode: testing
+  "POETRY_VIRTUALENVS_IN_PROJECT": false
+  "POETRY_VIRTUALENVS_OPTIONS_ALWAYS_COPY": true
+  "POETRY_VIRTUALENVS_OPTIONS_NO_PIP": false
+  "POETRY_VIRTUALENVS_OPTIONS_NO_SETUPTOOLS": false
+
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Build Dockerfile
+        run: |
+          make docker
+
+    # - name: Run tests
+    #   run: |
+    #     make test
